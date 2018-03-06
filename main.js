@@ -73,7 +73,7 @@ const rl = readline.createInterface({
 			break;		
 
 	    case 'credits':
-	      	cmds.creditsCmd();
+	      	cmds.creditsCmd(rl);
 	      	break;
 
 	    default:
