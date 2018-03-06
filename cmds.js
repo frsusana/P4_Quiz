@@ -146,9 +146,11 @@ exports.testCmd = (rl,id) => {
 			rl.question(colorize(quiz.question + '? ', 'red'), answer => { 
 				log (`${'Su respuesta es:'}`);
 				if (answer.trim().toLowerCase() === quiz.answer.toLowerCase()){
+					log(`Su respuesta es corecta.`);
 					biglog('CORRECTA.', 'green');
 				} 
 				else {
+					log(`Su respuesta es incorecta.`);
 					biglog('INCORRECTA.', 'red');
 				} 
 				rl.prompt();
@@ -221,7 +223,7 @@ exports.creditsCmd = rl => {
 };
 
 
-/**
+/**s
  * Terminar el programa
  */
 exports.quitCmd = rl => {
