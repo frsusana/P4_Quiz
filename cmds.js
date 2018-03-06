@@ -216,7 +216,7 @@ exports.playCmd = rl => {
  */
 exports.creditsCmd = rl => {
 	log('Autores de la práctica:');
-	log('Susana Fernández Redondo.', 'green');
+	log('SUSANA Fernández Redondo.', 'green');
 	rl.prompt();
 };
 
