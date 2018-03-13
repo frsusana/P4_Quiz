@@ -275,9 +275,11 @@ exports.playCmd = rl => {
 			.then(answer => {
 				if (answer.trim().toLowerCase() === quiz.answer.toLowerCase().trim()) {
 					score++;
+					log(`Su respuesta es correcta.`);
 					log(`CORRECTO - Lleva ${score} aciertos`);
 					resolve(playOne());
 				}else{
+					log(`Su respuesta es incorrecta.`);
 					log(`INCORRECTO.`);
 					resolve();
 				}
