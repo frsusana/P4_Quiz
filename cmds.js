@@ -214,32 +214,30 @@ exports.editCmd = (rl,id) => {
 exports.testCmd = (rl,id) => {
 	validateId(id)
 	.then( id => models.quiz.findById(id))
-	.then(quiz => {
+	.then( quiz => {
 		if (!quiz) {
-			throw new Error(`No existe un quiz asociado al id={id}.`);
+			throw new Error(`No existe un quiz asociado al id=${id}.`);
 		}
 
-		process.stdout.isTTY && setTimeout(() => {rl.write(quiz.question)}, 0);
+		
 		return makeQuestion(rl, quiz.question)
-		.then(q => {
-			return makeQuestion(rl, 'Introduzca la respuesta: ')
-			.then(a => {
-				if (a.trim().toLowerCase() === quiz.answer.toLowerCase()){
-					log(`Su respuesta es correcta.`);
-					biglog('CORRECTA.', 'green');
-				}
-				else {
-					log(`Su respuesta es incorrecta.`);
-					biglog('INCORRECTA.', 'red');
-				}
-			})
-			.catch(error => {
-				errorlog(error.message);
-			})
-			.then(() => {
-				rl.prompt();
-			});
-		});
+			
+		.then(a => {
+			if (a.trim().toLowerCase() === quiz.answer.toLowerCase()){
+				log(`Su respuesta es correcta.`);
+				biglog('CORRECTA.', 'green');
+			}
+			else {
+				log(`Su respuesta es incorrecta.`);
+				biglog('INCORRECTA.', 'red');
+			}
+		})
+	})
+	.catch(error => {
+		errorlog(error.message);
+		})
+	.then(() => {
+		rl.prompt();
 	});
 };
 
@@ -248,6 +246,7 @@ exports.testCmd = (rl,id) => {
  * Se gana si se contesta a todos satisfactoriamente.
  */
 exports.playCmd = rl => {
+	
 	let score = 0;
 
 	let toBePlayed = [];
@@ -268,9 +267,9 @@ exports.playCmd = rl => {
 			return;
 			}
 
-			let pos = Math.floor(Math.random() * teBePlayed.length); //posición del array, que es el quiz que vpy a preguntar.
-			let quiz= toBePLayed[pos];	//Saco el quiz de la posicion pos aletaria.
-			toBePLayed.splice(pos,1); 	//borro el quiz de la posición pos.
+			let pos = Math.floor(Math.random() * toBePlayed.length); //posición del array, que es el quiz que vpy a preguntar.
+			let quiz= toBePlayed[pos];	//Saco el quiz de la posicion pos aletaria.
+			toBePlayed.splice(pos,1); 	//borro el quiz de la posición pos.
 
 			makeQuestion(rl, quiz.question)	//Promesa 	No hago return porque me da igual lo que devuelva esta promesa
 			.then(answer => {
@@ -280,8 +279,6 @@ exports.playCmd = rl => {
 					resolve(playOne());
 				}else{
 					log(`INCORRECTO.`);
-					log(`Fin del juego. Aciertos: ${score}`);
-					biglog(score, 'magenta');
 					resolve();
 				}
 			});
@@ -296,7 +293,7 @@ exports.playCmd = rl => {
 		return playOne(); //Para que no acabe hasta que acabe esta segunda promesa(playOne). Tenemos que hacer que sea una promesa.
 	})
 	.catch(error => {
-		log(`Error: + error`);
+		errorlog(error.message);
 	})
 	.then(() => {
 		log(`Fin del juego. Aciertos: ${score}`);
