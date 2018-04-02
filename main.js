@@ -48,6 +48,8 @@ net.createServer(socket =>{
 	.on("error", () => {rl.close(); })
 	.on("end", () => {rl.close(); })
 
+	rl.prompt();
+
  
 	rl
 	.on('line', (line) => {
@@ -70,6 +72,7 @@ net.createServer(socket =>{
 			
 			case 'quit':
 			case 'q':
+				cmds.quitCmd(socket, rl);
 				break;
 
 			case 'add':

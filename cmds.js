@@ -326,7 +326,7 @@ exports.creditsCmd = (socket,rl) => {
 /**s
  * Terminar el programa
  */
-exports.quitCmd = rl => {
+exports.quitCmd = (socket, rl) => {
 	rl.close();
 	socket.end();
 };
