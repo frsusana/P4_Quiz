@@ -7,22 +7,6 @@ const net = require("net");
 
 const {log, biglog, errorlog, colorize} = require ("./out");
 
-//Tabla con todos los comandos, no la uso
-const commands = {
-	'help': cmds.helpCmd,
-	'h': cmds.helpCmd,
-	'quit': cmds.quitCmd,
-	'q': cmds.quitCmd,
-	'add': cmds.addCmd,
-	'list': cmds.listCmd,
-	'show': cmds.showCmd,
-	'test': cmds.testCmd,
-	'play': cmds.playCmd,
-	'p': cmds.playCmd,
-	'delete': cmds.deleteCmd,
-	'edit': cmds.editCmd,
-	'credits': cmds.creditsCmd,
-};
 
 //Crear el socket del servidor
 net.createServer(socket =>{
@@ -46,7 +30,7 @@ net.createServer(socket =>{
  
 	socket
 	.on("error", () => {rl.close(); })
-	.on("end", () => {rl.close(); })
+	.on("end", () => {rl.close(); });
 
 	rl.prompt();
 
@@ -67,7 +51,7 @@ net.createServer(socket =>{
 		  	
 		  	case 'h':
 		  	case 'help':
-		  		cmds.helpCmd(rl,socket); 
+		  		cmds.helpCmd(socket, rl); 
 		  		break;
 			
 			case 'quit':
@@ -105,7 +89,7 @@ net.createServer(socket =>{
 				break;		
 
 		    case 'credits':
-		      	cmds.creditsCmd(rl,socket);
+		      	cmds.creditsCmd(socket, rl);
 		      	break;
 
 		    default:

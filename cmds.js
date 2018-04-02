@@ -4,11 +4,6 @@ const Sequelize = require('sequelize');
 
 const {log, biglog, errorlog, colorize} = require ("./out");
 
-
-
-
-
-
 /**
  * Muestra la ayuda.
  */
@@ -25,7 +20,6 @@ exports.helpCmd = (socket,rl) => {
  	log(socket,"  p|play - Jugar a preguntar aleatoriamente todos los quizzes.");
  	log(socket,"  credits - Créditos.");
  	log(socket,"  q|quit - Salir del programa.");
- 	resolve();
 
  };
 
@@ -54,7 +48,7 @@ exports.listCmd = (socket,rl) => {
  * Si todo va bien, la promesa satisface y devuelve el valor de id a usuario.
  * @param	id Parametro con el índice a valiar.
  */
- const validateId =(socket,id)=>{
+ const validateId = id =>{
 
  	return new Sequelize.Promise((resolve, reject) => {
  		if (typeof id === "undefined") {
@@ -76,7 +70,7 @@ exports.listCmd = (socket,rl) => {
  * @param rl Objeto readline usado para implementar el CLI
  *@param id Clave del quiz a mostrar
  */
-exports.showCmd = (socket,rl,id) => {
+exports.showCmd = (socket, rl, id) => {
 	validateId(id)
 	.then(id => models.quiz.findById(id))	//si se cumple la promesa, no hay un error, si no iría al catch
 	//A su vez, el findById es otra promesa y, una vez ha terminado paso al siguiente then.
@@ -158,7 +152,7 @@ exports.addCmd = (socket,rl) => {
  * @param rl Objeto readline usado para implementar el CLI.
  * @param id Clave del quiz a borrar en el modelo.
  */
-exports.deleteCmd = (socket,rl,id) => {
+exports.deleteCmd = (socket, rl, id)  => {
 	
 	validateId(id)
 	.then(id => models.quiz.destroy({where: {id}}))
@@ -175,7 +169,7 @@ exports.deleteCmd = (socket,rl,id) => {
  *
  * @param, id Clave del quiz a editar.
  */
-exports.editCmd = (socket,rl,id) => {
+exports.editCmd = (socket, rl, id) => {
 	validateId(id)
 	.then(id => models.quiz.findById(id))
 	.then(quiz => {
@@ -232,7 +226,7 @@ exports.testCmd = (socket,rl,id) => {
 		.then(a => {
 			if (a.trim().toLowerCase() === quiz.answer.toLowerCase()){
 				log(socket,`Su respuesta es correcta.`);
-				biglog('CORRECTA.', 'green');
+				biglog(socket,'CORRECTA.', 'green');
 			}
 			else {
 				log(socket,`Su respuesta es incorrecta.`);
