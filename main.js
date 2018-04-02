@@ -47,7 +47,7 @@ net.createServer(socket =>{
 	socket
 	.on("error", () => {rl.close(); })
 	.on("end", () => {rl.close(); })
-	rl.prompt();
+
  
 	rl
 	.on('line', (line) => {
